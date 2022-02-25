@@ -9,6 +9,7 @@ namespace February2022
     {
         static void Main(string[] args)
         {
+     //My first Test Auomation
             // Open chrome Browser
             IWebDriver driver = new ChromeDriver();
             driver.Manage().Window.Maximize();
@@ -40,7 +41,7 @@ namespace February2022
                 Console.WriteLine("Test fail");
 
             }
-            //Validating Create New Time and Material
+    //Validating Create New Time and Material
 
             // Click on Administrator tab
             IWebElement administration = driver.FindElement(By.XPath("/html/body/div[3]/div/div/ul/li[5]/a"));
@@ -64,7 +65,7 @@ namespace February2022
 
             //Entering code tab
             IWebElement codetab = driver.FindElement(By.Id("Code"));
-            codetab.SendKeys("KarishmaTestLast");
+            codetab.SendKeys("Test29");
 
             //Entering Description tab
             IWebElement descriptiontab =driver.FindElement(By.Id("Description"));
@@ -91,7 +92,7 @@ namespace February2022
             // Check if record create is present in the table and has expected value
             IWebElement lasttab = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[1]"));
 
-            if (lasttab.Text == "KarishmaTestLast")
+            if (lasttab.Text == "Test29")
             {
                 Console.WriteLine("Materail record created successfully, test passed.");
             }
@@ -100,7 +101,56 @@ namespace February2022
                 Console.WriteLine("Test failed.");
             }
 
+  // Test to Edit the created record.
 
+            // Click edit on the last created record.
+            IWebElement Editbutton = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[5]/a[1]"));
+            Editbutton.Click();
+            // Selecting code feild and clearing  the text + adding new text
+            IWebElement codefield = driver.FindElement(By.Id("Code"));
+            codefield.Clear();
+            codefield.SendKeys("29Test3");
+
+            //Click on save button
+            IWebElement Saveresult = driver.FindElement(By.Id("SaveButton"));
+            Saveresult.Click();
+            Thread.Sleep(3000);
+
+          //Going Back to Last Page.
+            IWebElement lastpagetabbutton = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[4]/a[4]"));
+           lastpagetabbutton.Click();
+
+            // Check if last page tab elememt is same as edited data
+            IWebElement lasttab2 = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[1]"));
+
+            if (lasttab2.Text == "29Test3")
+            {
+                Console.WriteLine("Test Pass-Record is Edited");
+            }
+            else
+            { 
+                Console.WriteLine("Test Fails");
+            }
+  // Test to delete the edited record
+                      // Click on Delete tab
+                      IWebElement deletetab = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[5]/a[2]"));
+                      deletetab.Click();
+            Thread.Sleep(3000);
+                      // Handling the alert dialouge box
+                      driver.SwitchTo().Alert().Accept();
+             Thread.Sleep(3000);
+                     // Check if last page tab has deleted record
+                      IWebElement lasttab3 = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[1]"));
+           
+                      if (lasttab3.Text != "29Test3")
+                      {
+                          Console.WriteLine("Test pass- Entry deleted");
+
+                      }
+                      else
+                      {
+                          Console.WriteLine("Test Fail");  
+                      }
         }
     }
 }
