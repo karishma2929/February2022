@@ -14,7 +14,7 @@ namespace February2022.Pages
     {
         public void CreateTM(IWebDriver driver)
         {
-  // Creating New TM 
+            // Creating New TM 
             // Click on Create New tab
             IWebElement createnewtab = driver.FindElement(By.XPath("//*[@id='container']/p/a"));
             createnewtab.Click();
@@ -49,31 +49,42 @@ namespace February2022.Pages
             IWebElement savebutton = driver.FindElement(By.Id("SaveButton"));
             savebutton.Click();
             //Thread.Sleep(1000);
-          Wait.WaitToBeVisible(driver, "XPath", "//*[@id='tmsGrid']/div[3]/table/tbody/tr[1]/td[1]", 2);
+            Wait.WaitToBeVisible(driver, "XPath", "//*[@id='tmsGrid']/div[3]/table/tbody/tr[1]/td[1]", 2);
 
             //Click in on the last Page to Check the record
             IWebElement goToLastPageButton = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[4]/a[4]/span"));
             goToLastPageButton.Click();
-             Thread.Sleep(1000);
+            Thread.Sleep(1000);
+           }
 
-          // Check if record create is present in the table and has expected value
-            IWebElement ActualCode = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[1]"));
-            IWebElement ActualTypecode = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[2]"));
-            IWebElement ActualDescription = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[3]"));
-            IWebElement ActualPrice = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[4]"));
+      // Check if record create is present in the table and has expected value (Assertion for Spec Flow)
 
-          //Option1 using assertion:
-            Assert.That(ActualCode.Text == "Test29Kash", "Code is present in last");
-            Assert.That(ActualTypecode.Text == "M", "Type code is same as M");
-            Assert.That(ActualDescription.Text == "Doing it for first time", "It is same");
-            Assert.That(ActualPrice.Text == "$15.00", "Same");
+            public string GetCode(IWebDriver driver)
+            {
+                IWebElement ActualCode = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[1]"));
+                return ActualCode.Text;
+            }
+            public string TypeCode(IWebDriver driver)
+            {
+                IWebElement ActualTypecode = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[2]"));
+                return ActualTypecode.Text;
+            }
+            public string Description(IWebDriver driver)
+            {
+                IWebElement ActualDescription = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[3]"));
+                return ActualDescription.Text;
+            }
+            public string Price(IWebDriver driver)
+            {
+                IWebElement ActualPrice = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[4]"));
+                return ActualPrice.Text;
+            }
 
-    
-        }
-//______________________________________________________________________________________________________________
         
-// Test to Edit the created TM record.
-        public void EditTM(IWebDriver driver)
+        
+//________________________________________________________________________________________________________________
+     // Test to Edit the created TM record.
+        public void EditTM(IWebDriver driver,string description)
         {
 
             // Wait until Entire TM page is displayed
@@ -108,7 +119,7 @@ namespace February2022.Pages
             // Edit description
             IWebElement descriptionTextbox = driver.FindElement(By.Id("Description"));
             descriptionTextbox.Clear();
-            descriptionTextbox.SendKeys("Changing My Description");
+            descriptionTextbox.SendKeys(description);   //________________________________********
 
             //Edit price
             IWebElement priceTag = driver.FindElement(By.XPath("//*[@id='TimeMaterialEditForm']/div/div[4]/div/span[1]/span/input[1]"));
@@ -135,13 +146,19 @@ namespace February2022.Pages
             // Check if last page tab elememt is same as edited data
           IWebElement createdCode = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[1]"));
           IWebElement createdTypeCode = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[2]"));
-          IWebElement createdDescription = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[3]"));
+          
           IWebElement createdPrice = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[4]"));
 
             Assert.That(createdCode.Text == "EditKash", "Code record hasn't been edited.");
             Assert.That(createdTypeCode.Text == "M", "TypeCode record hasn't been edited.");
-            Assert.That(createdDescription.Text == "Changing My Description", "Description record hasn't been edited.");
+            
             Assert.That(createdPrice.Text == "$170.00", "Price record hasn't been edited.");
+
+        }
+        public string GetEditDescription(IWebDriver driver)
+        {
+            IWebElement createdDescription = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[3]"));
+            return createdDescription.Text;
 
         }
 //_________________________________________________________________________________________________________________

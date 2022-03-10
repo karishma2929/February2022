@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace February2022.Utilities
 {
-    internal class CommonDriver
+    public class CommonDriver
     {
         public static IWebDriver driver;
 

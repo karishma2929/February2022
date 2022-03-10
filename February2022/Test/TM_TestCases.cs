@@ -9,6 +9,7 @@ using System.Threading;
 namespace February2022
 {
     [TestFixture]
+    [Parallelizable]
     internal class TM_TestCases : CommonDriver
     {
     
@@ -31,7 +32,7 @@ namespace February2022
             homePageObj.GoToTMPage(driver);
             // Edit TM
             TMPage EditPageObj = new TMPage();
-         EditPageObj.EditTM(driver);
+            EditPageObj.EditTM(driver,"dummy");
         }
      [Test, Order(3), Description("Check If user is able to Delete record")]
         public void DeleteTM()
