@@ -32,7 +32,7 @@ namespace February2022
             homePageObj.GoToTMPage(driver);
             // Edit TM
             TMPage EditPageObj = new TMPage();
-            EditPageObj.EditTM(driver,"dummy");
+            EditPageObj.EditTM(driver,"dummy1","dummy2","dummy3");
         }
      [Test, Order(3), Description("Check If user is able to Delete record")]
         public void DeleteTM()

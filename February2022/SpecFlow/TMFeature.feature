@@ -11,14 +11,14 @@ Scenario:Create time and Material record with valid data
 Scenario Outline:Edit time and Material record with valid data
 	Given Successfully login to turn up portal.
 	And Navigate to Time and Material tab.
-	When Edit '<Description>' on existing Time and Material record
-	Then '<Description>' should be seen in updated Time and Material record
+	When Edit '<Description>','<Code>','<Price>' on existing Time and Material record
+	Then '<Description>','<Code>','<Price>', should be seen in updated Time and Material record
 
 	Examples: 
-	| Description  |
-	| February2020 |
-	| test123      |
-	| Test567      |
+	| Description  | Code | Price |
+	| February2020 | aaa  | 700   |
+	| test123      | bbb  | 500   |
+	| Test567      | ccc  | 600   |
 
 
 

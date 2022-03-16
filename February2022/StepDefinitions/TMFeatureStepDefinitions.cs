@@ -52,18 +52,26 @@ namespace February2022
             Assert.That(Price == "$170.00", "Actual code and expected code do not match");
         }
 
-        [When(@"Edit '([^']*)' on existing Time and Material record")]
-        public void WhenEditOnExistingTimeAndMaterialRecord(string p0)
+        [When(@"Edit '([^']*)','([^']*)','([^']*)' on existing Time and Material record")]
+        public void WhenEditOnExistingTimeAndMaterialRecord(string p0, string p1, string p2)
         {
-            TMPageObj.EditTM(driver, p0);
+            TMPageObj.EditTM(driver,p0,p1,p2);
         }
 
-        [Then(@"'([^']*)' should be seen in updated Time and Material record")]
-        public void ThenShouldBeSeenInUpdatedTimeAndMaterialRecord(string p0)
+        [Then(@"'([^']*)','([^']*)','([^']*)', should be seen in updated Time and Material record")]
+        public void ThenShouldBeSeenInUpdatedTimeAndMaterialRecord(string p0, string p1, string p2)
         {
-           string EditedDescription =TMPageObj.GetEditDescription(driver);
-           Assert.That(EditedDescription == p0, "Description record hasn't been edited.");
+            string editedCode = TMPageObj.GetEditCode(driver);
+            string editedDescription = TMPageObj.GetEditDescription(driver);
+            string editedPrice= TMPageObj.GetEditPrice(driver);
+
+            Assert.That(editedDescription == p0,"Actual description is different from Edited Description");
+            Assert.That(editedCode == p1,"Actual code is different from edited code");
+            Assert.That(editedPrice == p2,"Actual price is not equalto edited pricce");
+
         }
+         
+
 
     }
 }
